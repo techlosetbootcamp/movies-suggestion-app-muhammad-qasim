@@ -1,0 +1,15 @@
+export const colors = {
+  bgPrimary: "bg-[#ebeaea]",
+  bgSecondary: "bg-[#D9D9D9]",
+  textDanger: "text-red-600",
+  textwhite: "text-[#FFFFFF]",
+  bgblack: "bg-[#000000]",
+  bgBlue: "bg-blue-500",
+  bgBlueDark: "bg-blue-600 ",
+  textBlack: "text-black",
+  black: "#000000",
+  borderBlack: "border-black",
+  textGrey: "text-[#636363]",
+  bgWhite: "bg-[#FFFFFF]",
+  textDarkGrey: "text-[#7D7D7D]",
+};
