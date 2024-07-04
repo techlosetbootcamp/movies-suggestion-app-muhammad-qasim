@@ -1,20 +1,13 @@
-import { RootState } from "../store/store";
-import { MovieCardState } from "../types/types";
-import PopularMovie from "../components/popularMovies/PopularMovie";
-import PopularReleases from "../components/popularReleases/PopularReleases";
-import Trending from "../components/trending/Trending";
-import Loading from "../components/loading/Loading";
-import Error from "../components/error/Error";
-import useFetchData from "../hooks/useFetchData";
+import PopularMovie from "../../components/popularMovies/PopularMovie";
+import PopularReleases from "../../components/popularReleases/PopularReleases";
+import Trending from "../../components/trending/Trending";
+import Loading from "../../components/loading/Loading";
+import Error from "../../components/error/Error";
+import useHomeFetch from "./useHome";
 
 export default function Home(): JSX.Element {
   const { popularMovies, isLoading, isError, trendingMovies, releasesMovies } =
-    useFetchData<MovieCardState>(
-      (state: RootState) => state.movieCard,
-      null,
-      null
-    );
-
+    useHomeFetch();
   if (isLoading === true) {
     return <Loading />;
   }

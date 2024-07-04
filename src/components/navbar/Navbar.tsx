@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import useCustomInput from "../../hooks/useCustomInput";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import searchIcon from "../../assets/search.png";
 import plusIcon from "../../assets/plus.png";
-import { colors } from "../../constants/colors";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -10,11 +9,11 @@ function useQuery() {
 
 export default function Navbar(): JSX.Element {
   const navigate = useNavigate();
-  const [showInput, setShowInput] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>("");
-
   const query = useQuery();
   const searchQuery: string | null = query.get("query");
+
+  const { showInput, setShowInput, inputValue, setInputValue } =
+    useCustomInput(searchQuery);
 
   const location = useLocation();
   const isSearch = location.pathname === "/search";
@@ -25,10 +24,6 @@ export default function Navbar(): JSX.Element {
     }
   };
 
-  useEffect(() => {
-    setInputValue(searchQuery ?? "");
-  }, [searchQuery]);
-
   return (
     <div
       className={`relative flex flex-col lg:flex-row w-full lg:pb-[22px] px-[20px] pt-[77px] pb-[11.4px] lg:px-[0px] ${
@@ -37,9 +32,7 @@ export default function Navbar(): JSX.Element {
     >
       <div className="absolute md:top-[40px] md:left-[80px]  lg:top-[37px] lg:left-[80px] w-[130px] top-[43px] left-[20px] h-[106px]">
         <Link to="/">
-          <span
-            className={`text-[35px] font-[600] font-caros-bold leading-[21.56px] ${colors.textBlack}`}
-          >
+          <span className="text-[35px] font-[600] font-caros-bold leading-[21.56px] text-black">
             The Movie Tracker
           </span>
         </Link>
@@ -69,7 +62,7 @@ export default function Navbar(): JSX.Element {
           onKeyDown={handleKeyDown}
           spellCheck={false}
           placeholder="🔍 Search a movie or a series"
-          className={`${colors.bgSecondary} md:rounded-[30px] placeholder-[${colors.black}] lg:w-[630px] lg:h-[57px] md:w-[410px] md:h-[54px] w-[334px] h-[52.6px] rounded-[20px] font-roboto md:text-[20px] text-[18px] font-normal md:leading-[23.44px] leading-[21.09px] text-center focus:outline-none`}
+          className="bg-secondary  md:rounded-[30px] placeholder-[black] lg:w-[630px] lg:h-[57px] md:w-[410px] md:h-[54px] w-[334px] h-[52.6px] rounded-[20px] font-roboto md:text-[20px] text-[18px] font-normal md:leading-[23.44px] leading-[21.09px] text-center focus:outline-none"
         />
       </div>
     </div>

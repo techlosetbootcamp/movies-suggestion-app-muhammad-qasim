@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+const { colors } = require("./src/constants/colors.ts");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors,
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
         "caros-bold": ["FONTSPRING DEMO - Caros Bold", "sans-serif"],
@@ -16,9 +19,10 @@ module.exports = {
     function ({ addBase, addUtilities }) {
       addBase({
         body: {
-          backgroundColor: "#ebeaea",
+          backgroundColor: colors.primary,
         },
       });
+
       const newUtilities = {
         "@media (min-width: 1238px) and (max-width: 1319px)": {
           ".tailer-card": {
@@ -31,7 +35,7 @@ module.exports = {
             height: "235px !important",
           },
         },
-        "@media (min-width: 1024px) and (max-width: 1237px)": {
+        "@media (min-width: 1024px) and (max-width: 1137px)": {
           ".tailer-card": {
             width: "365px !important",
             height: "235px !important",
@@ -54,6 +58,7 @@ module.exports = {
           display: "none",
         },
       };
+
       addUtilities(newUtilities, ["responsive"]);
     },
   ],

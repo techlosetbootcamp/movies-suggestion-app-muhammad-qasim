@@ -1,21 +1,16 @@
 import { Link, useParams } from "react-router-dom";
-import { RootState } from "../store/store";
-import { MovieDetailsState, Genres, SimilarMovies } from "../types/types";
-import bookmarkIcon from "../assets/bookmark.png";
-import Loading from "../components/loading/Loading";
-import Error from "../components/error/Error";
-import { colors } from "../constants/colors";
-import useFetchData from "../hooks/useFetchData";
+import { Genres, SimilarMovies } from "../../types/types";
+import bookmarkIcon from "../../assets/bookmark.png";
+import Loading from "../../components/loading/Loading";
+import Error from "../../components/error/Error";
+import useMovieFetch from "./useMovie";
 
 export default function Movie(): JSX.Element {
   const { id } = useParams();
   const { details, trailer, similarMovies, isLoading, isError } =
-    useFetchData<MovieDetailsState>(
-      (state: RootState) => state.movieDetails,
-      id,
-      null
-    );
+    useMovieFetch(id);
 
+  const links = [1, 2, 3, 4];
   const formatReviewCount = (count: number) => {
     if (count >= 1000 && count < 1000000) {
       return `${(count / 1000).toFixed(1)}k`;
@@ -40,7 +35,7 @@ export default function Movie(): JSX.Element {
         <div className="font-roboto font-[700] md:text-[40px] text-[30px] md:leading-[46.88px] leading-[35.16px]">
           <h1>{details?.title}</h1>
         </div>
-        <div className={`hidden lg:flex ${colors.bgSecondary}  rounded-[30px]`}>
+        <div className="hidden lg:flex  bg-secondary  rounded-[30px]">
           <Link
             to={""}
             className="flex items-center font-roboto font-[500] text-[15px] leading-[17.58px] py-[11px] px-[30px]"
@@ -58,7 +53,7 @@ export default function Movie(): JSX.Element {
         <div className="absolute  z-50 order-2 lg:order-1 lg:relative md:top-28 md:left-8 top-[88px] left-[19px]  lg:left-0 lg:top-0 ">
           <img
             src={`https://image.tmdb.org/t/p/original${details?.poster_path}`}
-            alt="#"
+            alt={details?.title}
             className="lg:h-[291px] lg:w-[196px] md:w-[140px] md:h-[187px] w-[98px] h-[146px] order-2 rounded-[20px] object-cover"
           />
         </div>
@@ -68,7 +63,7 @@ export default function Movie(): JSX.Element {
               <Link
                 key={genre?.id}
                 to={""}
-                className={`font-roboto gerner-link font-[500] text-[18px] leading-[21.09px] py-[6px] px-[18px] rounded-[20px] border ${colors.borderBlack}`}
+                className="font-roboto gerner-link font-[500] text-[18px] leading-[21.09px] py-[6px] px-[18px] rounded-[20px] border border-black"
               >
                 {genre?.name}
               </Link>
@@ -84,14 +79,12 @@ export default function Movie(): JSX.Element {
               <p className="text-[18px]">IMDB Rating</p>
               <p className="leading-[17.58px] text-center  font-roboto text-[15px] font-[400] ">
                 ⭐ {details?.vote_average?.toFixed(1)}
-                <span
-                  className={`${colors.textGrey} leading-[14.06px] text-[12px]`}
-                >
+                <span className="text-grey leading-[14.06px] text-[12px]">
                   /10
                 </span>
               </p>
             </div>
-            <div className={`leading-[17.58px] text-[15px] ${colors.textGrey}`}>
+            <div className={`leading-[17.58px] text-[15px] text-grey`}>
               <p>{formatReviewCount(details?.vote_count || 0)} Reviews</p>
             </div>
           </div>
@@ -110,39 +103,22 @@ export default function Movie(): JSX.Element {
       <div className="flex flex-col md:flex-row md:items-center space-x-0 md:space-x-[30px] font-roboto font-[700]">
         <h2 className="text-[30px] leading-[35.16px] mb-4 md:mb-0">Seasons</h2>
         <div className="flex flex-wrap md:flex-nowrap space-x-[7.73px]">
-          <Link
-            to={""}
-            className={`rounded-[10px] py-[10px] px-[15.30px] ${colors.bgSecondary} text-[20px] leading-[23.44px] mb-2 md:mb-0`}
-          >
-            1
-          </Link>
-          <Link
-            to={""}
-            className={`rounded-[10px] py-[10px] px-[15.30px] ${colors.bgSecondary} text-[20px] leading-[23.44px] mb-2 md:mb-0`}
-          >
-            2
-          </Link>
-          <Link
-            to={""}
-            className={`rounded-[10px] py-[10px] px-[15.30px] ${colors.bgSecondary} text-[20px] leading-[23.44px] mb-2 md:mb-0`}
-          >
-            3
-          </Link>
-          <Link
-            to={""}
-            className={`rounded-[10px] py-[10px] px-[15.30px] ${colors.bgSecondary} text-[20px] leading-[23.44px] mb-2 md:mb-0`}
-          >
-            4
-          </Link>
+          {links.map((number) => (
+            <Link
+              key={number}
+              to=""
+              className="rounded-[10px] py-[10px] px-[15.30px] bg-secondary text-[20px] leading-[23.44px] mb-2 md:mb-0"
+            >
+              {number}
+            </Link>
+          ))}
         </div>
       </div>
       <div className="flex flex-wrap justify-start mt-[34.73px]">
         {similarMovies?.slice(0, 4).map((movie: SimilarMovies, index) => (
           <div
             key={movie?.id}
-            className={`flex flex-col w-full sm:w-[calc(100%-20px)] md:w-[calc(50%-10px)] lg:w-[calc(25%-15px)] h-[202px] rounded-[20px] ${
-              colors.bgWhite
-            } mb-4 ${
+            className={`flex flex-col w-full sm:w-[calc(100%-20px)] md:w-[calc(50%-10px)] lg:w-[calc(25%-15px)] h-[202px] rounded-[20px]  bg-white mb-4 ${
               index % 2 !== 0 && index % 4 !== 0 ? "md:ml-[20px]" : ""
             } ${index % 4 !== 0 ? "lg:ml-[20px]" : ""}`}
           >

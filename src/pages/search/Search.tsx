@@ -1,10 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { RootState } from "../store/store";
-import { SearchState, Movies } from "../types/types";
-import Loading from "../components/loading/Loading";
-import Error from "../components/error/Error";
-import { colors } from "../constants/colors";
-import useFetchData from "../hooks/useFetchData";
+import { Movies } from "../../types/types";
+import Loading from "../../components/loading/Loading";
+import Error from "../../components/error/Error";
+import useSearchFetch from "./useSearch";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -12,12 +10,9 @@ function useQuery() {
 
 export default function Search(): JSX.Element {
   const query = useQuery();
-  const searchQuery: string | null = query.get("query");
-  const { movies, isLoading, isError } = useFetchData<SearchState>(
-    (state: RootState) => state.search,
-    null,
-    searchQuery
-  );
+  const searchQuery: string | undefined = query.get("query") ?? undefined;
+
+  const { isLoading, isError, movies } = useSearchFetch(searchQuery);
 
   if (isLoading === true) {
     return <Loading />;
@@ -35,13 +30,9 @@ export default function Search(): JSX.Element {
     <>
       <div className="lg:mx-[80px] lg:mb-[46px] lg:mt-[46px] my-[27px] mx-[20px] relative">
         <div className="lg:mb-[14px]">
-          <h1
-            className={`font-roboto text-[15px] font-[500] leading-[10.95px] ${colors.textBlack} hidden lg:block`}
-          >
+          <h1 className="font-roboto text-[15px] font-[500] leading-[10.95px]  text-black hidden lg:block">
             Showing search results for:{" "}
-            <span
-              className={`font-roboto text-[20px] font-[500] leading-[14.6px] ${colors.textDarkGrey}`}
-            >
+            <span className="font-roboto text-[20px] font-[500] leading-[14.6px]  text-darkGrey">
               {searchQuery}
             </span>
           </h1>
@@ -57,9 +48,7 @@ export default function Search(): JSX.Element {
                       alt={item?.title}
                       className="rounded-[20px] object-cover w-full h-full"
                     />
-                    <div
-                      className={`absolute top-[17px] left-[12px] ${colors.textwhite} font-caros-bold text-[15px] font-semibold leading-[9.24px] text-left`}
-                    >
+                    <div className="absolute top-[17px] left-[12px]  text-white font-caros-bold text-[15px] font-semibold leading-[9.24px] text-left">
                       ⭐ {item?.vote_average?.toFixed(1)}
                     </div>
                   </div>

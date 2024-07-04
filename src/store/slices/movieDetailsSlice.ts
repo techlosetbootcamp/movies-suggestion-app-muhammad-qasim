@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import AxiosInstance from "../../instance/axiosInstance";
+import AxiosInstance from "../../utills/instance/axiosInstance";
 import {
   MovieDetailsData,
   SimilarMovies,
@@ -26,14 +26,15 @@ export const fetchMovieDetails = createAsyncThunk<
   AsyncThunkConfig
 >("movieDetails/fetchMovieDetails", async (id: string, { rejectWithValue }) => {
   try {
-    const movieDetailsResponse: AxiosResponse<MovieDetailsData> =
-      await AxiosInstance.get<MovieDetailsData>(`/movie/${id}`);
-    const trailerResponse: AxiosResponse<{ results: Trailer[] }> =
-      await AxiosInstance.get<{ results: Trailer[] }>(`/movie/${id}/videos`);
-    const similarMoviesResponse: AxiosResponse<{ results: SimilarMovies[] }> =
-      await AxiosInstance.get<{ results: SimilarMovies[] }>(
-        `/movie/${id}/similar`
-      );
+    const movieDetailsResponse: AxiosResponse = await AxiosInstance.get(
+      `/movie/${id}`
+    );
+    const trailerResponse: AxiosResponse = await AxiosInstance.get(
+      `/movie/${id}/videos`
+    );
+    const similarMoviesResponse: AxiosResponse = await AxiosInstance.get(
+      `/movie/${id}/similar`
+    );
 
     const videos: Trailer[] = trailerResponse.data.results;
     const movieDetailsData: MovieDetailsData = movieDetailsResponse.data;
