@@ -8,16 +8,24 @@ const useSearchFetch = (searchQuery: string | undefined) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (searchQuery !== undefined) {
-      dispatch(fetchMovies(searchQuery));
-    }
+    const fetchData = async () => {
+      if (searchQuery !== undefined) {
+        await dispatch(fetchMovies(searchQuery));
+      }
+    };
+
+    fetchData();
   }, [dispatch, searchQuery]);
 
-  const stateData = useAppSelector<SearchState>(
-    (state: RootState) => state.search
+  const stateData = useAppSelector(
+    (state: RootState): SearchState => state.search
   );
 
-  return stateData;
+  return {
+    isLoading: stateData.isLoading,
+    isError: stateData.isError,
+    movies: stateData.movies,
+  };
 };
 
 export default useSearchFetch;

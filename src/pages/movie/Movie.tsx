@@ -4,22 +4,14 @@ import bookmarkIcon from "../../assets/bookmark.png";
 import Loading from "../../components/loading/Loading";
 import Error from "../../components/error/Error";
 import useMovieFetch from "./useMovie";
+import useReviewCountFormatter from "../../hooks/useReviewCountFormatter";
 
 export default function Movie(): JSX.Element {
   const { id } = useParams();
   const { details, trailer, similarMovies, isLoading, isError } =
     useMovieFetch(id);
-
+  const formattedCount = useReviewCountFormatter(details?.vote_count);
   const links = [1, 2, 3, 4];
-  const formatReviewCount = (count: number) => {
-    if (count >= 1000 && count < 1000000) {
-      return `${(count / 1000).toFixed(1)}k`;
-    } else if (count >= 1000000) {
-      return `${(count / 1000000).toFixed(1)}M`;
-    } else {
-      return count.toString();
-    }
-  };
 
   if (isLoading === true) {
     return <Loading />;
@@ -85,7 +77,7 @@ export default function Movie(): JSX.Element {
               </p>
             </div>
             <div className={`leading-[17.58px] text-[15px] text-grey`}>
-              <p>{formatReviewCount(details?.vote_count || 0)} Reviews</p>
+              <p>{formattedCount || 0} Reviews</p>
             </div>
           </div>
         </div>

@@ -8,16 +8,26 @@ const useMovieFetch = (id: string | undefined) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id !== undefined && id !== "") {
-      dispatch(fetchMovieDetails(id));
-    }
+    const fetchData = async () => {
+      if (id !== undefined && id !== "") {
+        await dispatch(fetchMovieDetails(id));
+      }
+    };
+
+    fetchData();
   }, [dispatch, id]);
 
-  const stateData = useAppSelector<MovieDetailsState>(
-    (state: RootState) => state.movieDetails
+  const stateData = useAppSelector(
+    (state: RootState): MovieDetailsState => state.movieDetails
   );
 
-  return stateData;
+  return {
+    isLoading: stateData.isLoading,
+    isError: stateData.isError,
+    details: stateData.details,
+    trailer: stateData.trailer,
+    similarMovies: stateData.similarMovies,
+  };
 };
 
 export default useMovieFetch;

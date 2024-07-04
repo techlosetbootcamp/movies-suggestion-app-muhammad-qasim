@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-const { colors } = require("./src/constants/colors.ts");
+const { Colors } = require("./src/constants/Colors");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors,
+      colors:{
+        ...Colors
+      },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
         "caros-bold": ["FONTSPRING DEMO - Caros Bold", "sans-serif"],
@@ -19,7 +21,7 @@ module.exports = {
     function ({ addBase, addUtilities }) {
       addBase({
         body: {
-          backgroundColor: colors.primary,
+          backgroundColor: Colors.primary,
         },
       });
 

@@ -1,29 +1,17 @@
-import useCustomInput from "../../hooks/useCustomInput";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import searchIcon from "../../assets/search.png";
 import plusIcon from "../../assets/plus.png";
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import useSearchInputNavigation from "../../hooks/useSearchInputNavigation";
 
 export default function Navbar(): JSX.Element {
-  const navigate = useNavigate();
-  const query = useQuery();
-  const searchQuery: string | null = query.get("query");
-
-  const { showInput, setShowInput, inputValue, setInputValue } =
-    useCustomInput(searchQuery);
-
-  const location = useLocation();
-  const isSearch = location.pathname === "/search";
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && inputValue.length > 0) {
-      navigate(`/search?query=${inputValue}`);
-    }
-  };
-
+  const {
+    showInput,
+    setShowInput,
+    inputValue,
+    setInputValue,
+    isSearch,
+    handleKeyDown,
+  } = useSearchInputNavigation();
   return (
     <div
       className={`relative flex flex-col lg:flex-row w-full lg:pb-[22px] px-[20px] pt-[77px] pb-[11.4px] lg:px-[0px] ${
@@ -62,7 +50,7 @@ export default function Navbar(): JSX.Element {
           onKeyDown={handleKeyDown}
           spellCheck={false}
           placeholder="🔍 Search a movie or a series"
-          className="bg-secondary  md:rounded-[30px] placeholder-[black] lg:w-[630px] lg:h-[57px] md:w-[410px] md:h-[54px] w-[334px] h-[52.6px] rounded-[20px] font-roboto md:text-[20px] text-[18px] font-normal md:leading-[23.44px] leading-[21.09px] text-center focus:outline-none"
+          className="bg-secondary md:rounded-[30px] placeholder-[black] lg:w-[630px] lg:h-[57px] md:w-[410px] md:h-[54px] w-[334px] h-[52.6px] rounded-[20px] font-roboto md:text-[20px] text-[18px] font-normal md:leading-[23.44px] leading-[21.09px] text-center focus:outline-none"
         />
       </div>
     </div>

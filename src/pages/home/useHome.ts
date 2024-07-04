@@ -8,14 +8,24 @@ const useHomeFetch = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchMovieCard());
+    const fetchData = async () => {
+      await dispatch(fetchMovieCard());
+    };
+
+    fetchData();
   }, [dispatch]);
 
-  const stateData = useAppSelector<MovieCardState>(
-    (state: RootState) => state.movieCard
+  const stateData = useAppSelector(
+    (state: RootState): MovieCardState => state.movieCard
   );
 
-  return stateData;
+  return {
+    isLoading: stateData.isLoading,
+    isError: stateData.isError,
+    popularMovies: stateData.popularMovies,
+    trendingMovies: stateData.trendingMovies,
+    releasesMovies: stateData.releasesMovies,
+  };
 };
 
 export default useHomeFetch;
