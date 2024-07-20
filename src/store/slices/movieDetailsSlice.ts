@@ -38,7 +38,20 @@ export const fetchMovieDetails = createAsyncThunk<
 
     const videos: Trailer[] = trailerResponse.data.results;
     const movieDetailsData: MovieDetailsData = movieDetailsResponse.data;
-    const similarMovies: SimilarMovies[] = similarMoviesResponse.data.results;
+    const similarMoviesData: SimilarMovies[] =
+      similarMoviesResponse.data.results;
+
+    const similarMovies: SimilarMovies[] = similarMoviesData.filter((movie) => {
+      if (
+        movie.poster_path !== null &&
+        movie.id !== null &&
+        movie.title !== null
+      ) {
+        return movie;
+      } else {
+        return null;
+      }
+    });
 
     const trailer =
       videos.find(

@@ -22,10 +22,14 @@ export default function Movie(): JSX.Element {
   }
 
   return (
-    <div className="md:mx-[80px] md:mb-[74px] mx-[21px] my-[43px]">
+    <div className="md:mx-[80px] md:mb-[74px] mx-[21px] mb-[43px] mt-[55px] md:mt-[43px]">
       <div className="flex items-center justify-between w-full">
-        <div className="font-roboto font-[700] md:text-[40px] text-[30px] md:leading-[46.88px] leading-[35.16px]">
-          <h1>{details?.title}</h1>
+        <div>
+          <h1 className="font-roboto font-[700] md:text-[40px] text-[30px] md:leading-[46.88px] leading-[35.16px] truncate">
+            {details?.title && details?.title?.length > 20
+              ? `${details.title.substring(0, 20)}...`
+              : details?.title}
+          </h1>
         </div>
         <div className="hidden lg:flex  bg-secondary  rounded-[30px]">
           <Link
@@ -42,7 +46,7 @@ export default function Movie(): JSX.Element {
         </div>
       </div>
       <div className="relative  flex items-center flex-col lg:flex-row  md:pt-[27px] pt-[24px] lg:pb-[51px] pb-[40px] justify-between  w-full">
-        <div className="absolute  z-50 order-2 lg:order-1 lg:relative md:top-28 md:left-8 top-[88px] left-[19px]  lg:left-0 lg:top-0 ">
+        <div className="absolute  z-50 order-2 lg:order-1 lg:relative md:top-28 md:left-8 top-[88px] left-[20px]  lg:left-0 lg:top-0 ">
           <img
             src={`https://image.tmdb.org/t/p/original${details?.poster_path}`}
             alt={details?.title}
@@ -61,17 +65,19 @@ export default function Movie(): JSX.Element {
               </Link>
             ))}
           </div>
-          <div className="w-full lg:w-[413px] lg:mt-[19px] lg:mb-12 mt-[27px] mb-[44px] shrink-div">
-            <p className="font-roboto font-[500] text-[18px] leading-[21.09px]">
+          <div className="w-full lg:w-[413px] lg:h-[107px] lg:mt-[19px] lg:mb-12 mt-[27px] mb-[44px] shrink-div overflow-hidden">
+            <p className="truncate-multiline font-roboto font-[500] text-[18px] leading-[21.09px]">
               {details?.overview}
             </p>
           </div>
-          <div className="flex items-center  font-roboto text-[15px] font-[400] space-x-[15px]">
-            <div className="leading-[21.09px]">
-              <p className="text-[18px]">IMDB Rating</p>
-              <p className="leading-[17.58px] text-center  font-roboto text-[15px] font-[400] ">
-                ⭐ {details?.vote_average?.toFixed(1)}
-                <span className="text-grey leading-[14.06px] text-[12px]">
+          <div className="flex items-center   space-x-[15px]">
+            <div className="flex flex-col items-center ">
+              <p className="font-roboto font-[400] text-[18px] leading-[21.09px] ">
+                IMDB Rating
+              </p>
+              <p className="leading-[17.58px] font-roboto text-[15px] font-[400] w-[59px]">
+                ⭐{details?.vote_average?.toFixed(1)}
+                <span className="text-grey font-roboto font-[400] leading-[14.06px] text-[12px]">
                   /10
                 </span>
               </p>
@@ -110,7 +116,7 @@ export default function Movie(): JSX.Element {
         {similarMovies?.slice(0, 4).map((movie: SimilarMovies, index) => (
           <div
             key={movie?.id}
-            className={`flex flex-col w-full sm:w-[calc(100%-20px)] md:w-[calc(50%-10px)] lg:w-[calc(25%-15px)] h-[202px] rounded-[20px]  bg-white mb-4 ${
+            className={`flex flex-col w-full sm:w-[calc(100%-20px)] md:w-[calc(50%-10px)] lg:w-[calc(25%-15px)] h-[202px] rounded-[20px]  bg-white mb-4 md:mb-0 ${
               index % 2 !== 0 && index % 4 !== 0 ? "md:ml-[20px]" : ""
             } ${index % 4 !== 0 ? "lg:ml-[20px]" : ""}`}
           >
@@ -120,7 +126,7 @@ export default function Movie(): JSX.Element {
                 alt={movie?.title}
                 className="h-[142px] w-full rounded-t-[20px]"
               />
-              <div className="font-roboto font-bold text-base leading-[23.44px] flex items-center px-[17px] py-2">
+              <div className="font-roboto font-bold text-base leading-[23.44px] flex items-center px-[17px] pt-[19px]">
                 <h3 className="line-clamp-2">{movie?.title}</h3>
               </div>
             </Link>

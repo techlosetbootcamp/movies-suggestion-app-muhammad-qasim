@@ -28,7 +28,7 @@ export default function Search(): JSX.Element {
 
   return (
     <>
-      <div className="lg:mx-[80px] lg:mb-[46px] lg:mt-[46px] my-[27px] mx-[20px] relative">
+      <div className="lg:mx-[80px] lg:mb-[46px] lg:mt-[46px] my-[20px] mx-[20px] relative">
         <div className="lg:mb-[14px]">
           <h1 className="font-roboto text-[15px] font-[500] leading-[10.95px]  text-black hidden lg:block">
             Showing search results for:{" "}

@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Caros Bold";
+  src: url("../../public/fonts/Fontspring-DEMO-caros-bold.woff2")
+      format("woff2"),
+    url("../../public/fonts/Fontspring-DEMO-caros-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}

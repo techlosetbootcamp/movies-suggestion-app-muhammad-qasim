@@ -5,12 +5,12 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors:{
-        ...Colors
+      colors: {
+        ...Colors,
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
-        "caros-bold": ["FONTSPRING DEMO - Caros Bold", "sans-serif"],
+        caros: ['"Caros Bold"', "sans-serif"],
       },
       fontSize: {
         "20px": "20px",
@@ -58,6 +58,13 @@ module.exports = {
         },
         ".hide-scroll-bar::-webkit-scrollbar": {
           display: "none",
+        },
+        ".truncate-multiline": {
+          display: "-webkit-box",
+          "-webkit-line-clamp": "5",
+          "-webkit-box-orient": "vertical",
+          overflow: "hidden",
+          "text-overflow": "ellipsis",
         },
       };
 

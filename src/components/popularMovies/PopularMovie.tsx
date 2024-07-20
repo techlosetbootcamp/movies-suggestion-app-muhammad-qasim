@@ -6,7 +6,7 @@ export default function PopularMovie({
 }: PopularMovieProps): JSX.Element {
   return (
     <div className="flex flex-col">
-      <h3 className="font-roboto text-[20px]  text-black font-[500] leading-[23.44px] md:mb-[23px] mb-[11px]">
+      <h3 className="font-roboto text-[20px]  w-[140px] text-black font-[500] leading-[23.44px] md:mb-[23px] mb-[11px]">
         Popular Movies
       </h3>
       <div className="flex overflow-x-scroll hide-scroll-bar">
